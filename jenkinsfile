@@ -32,6 +32,13 @@ pipeline  {
                         }
                     }
                 }
+                stage("Validar AMI 3") {
+                    steps {
+                        dir('packer') {
+                            sh "packer validate AMI_3.json"
+                        }
+                    }
+                }
             }
         }
     }
