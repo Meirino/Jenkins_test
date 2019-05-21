@@ -18,7 +18,6 @@ pipeline  {
         }
         stage('Validar Packer') {
             parallel {
-                failFast true
                 stage("Validar AMI 1") {
                     steps {
                         dir('packer') {
