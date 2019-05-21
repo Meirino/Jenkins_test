@@ -13,7 +13,7 @@ pipeline  {
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git credentialsId: 'Test_Github_Example', url: "$git_url", branch: "master"
+                git credentialsId: 'Test_Github_Example', url: "$git_url", branch: "$BRANCH_NAME"
             }
         }
         stage('Validar Packer') {
