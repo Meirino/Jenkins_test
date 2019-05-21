@@ -1,0 +1,38 @@
+import groovy.json.JsonOutput
+
+// Git settings
+env.git_url = 'https://github.com/Meirino/Jenkins_test.git'
+env.git_branch = 'master'
+
+// AWS Region
+env.region = "us-east-1"
+
+pipeline  {
+    agent any
+
+    stages {
+        stage('Clonar Repositorio') {
+            steps {
+                git credentialsId: 'Test_Github_Example', url: "$git_url", branch: "master"
+            }
+        }
+        stage('Validar Packer') {
+            parallel(
+                stage("Validar AMI 1") {
+                    steps {
+                        dir('packer') {
+                            sh "packer validate AMI_1.json"
+                        }
+                    }
+                }
+                stage("Validar AMI 2") {
+                    steps {
+                        dir('packer') {
+                            sh "packer validate AMI_2.json"
+                        }
+                    }
+                }
+            )
+        }
+    }
+}
